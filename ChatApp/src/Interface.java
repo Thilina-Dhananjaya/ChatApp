@@ -43,6 +43,11 @@ public class Interface extends javax.swing.JFrame {
         reciver.setText("Reciever");
 
         send.setText("Send");
+        send.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sendMouseClicked(evt);
+            }
+        });
 
         history.setColumns(20);
         history.setRows(5);
@@ -110,6 +115,22 @@ public class Interface extends javax.swing.JFrame {
                                 
                 this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_cancelMouseClicked
+
+    private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendMouseClicked
 
     /**
      * @param args the command line arguments
