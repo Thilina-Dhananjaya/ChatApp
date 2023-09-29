@@ -27,7 +27,7 @@ public class Interface extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         massage = new javax.swing.JTextField();
-        receiver = new javax.swing.JLabel();
+        reciver = new javax.swing.JLabel();
         send = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         history = new javax.swing.JTextArea();
@@ -40,7 +40,7 @@ public class Interface extends javax.swing.JFrame {
 
         massage.setText("jTextField1");
 
-        receiver.setText("Reciever");
+        reciver.setText("Reciever");
 
         send.setText("Send");
 
@@ -72,7 +72,7 @@ public class Interface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(massage)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(receiver, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(reciver, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(send))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)))
@@ -90,7 +90,7 @@ public class Interface extends javax.swing.JFrame {
                 .addComponent(massage, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(receiver, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reciver, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(send, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,7 +153,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField massage;
     public javax.swing.JLabel name;
-    private javax.swing.JLabel receiver;
+    public javax.swing.JLabel reciver;
     private javax.swing.JButton send;
     // End of variables declaration//GEN-END:variables
 }

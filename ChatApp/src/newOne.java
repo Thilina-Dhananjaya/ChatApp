@@ -130,25 +130,19 @@ public class newOne extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Add A Username!");
         }
         else if(checkUsername(uname)){
+        
+                JOptionPane.showMessageDialog(null, "Name already Exist");
+        }
+        
+        else{
                    
         PreparedStatement ps;
-        String query  = "INSERT INTO `the_app_users`(`u_fname`, `u_lname`, `u_uname`, `u_pass`, `u_bdate`, `u_address`) VALUES (?,?,?,?,?,?)";
+        String query  = "INSERT INTO `names`(`users`) VALUES (?)";
         
         try {
             ps = MyConnection.getConnection().prepareStatement(query);
             
-            ps.setString(1, fname);
-            ps.setString(2, lname);
-            ps.setString(3, uname);
-            ps.setString(4, enc);
-            
-            if (bdate != null)
-            {
-             ps.setString(5, bdate);
-            }else {
-                ps.setNull(5, 0);
-            }
-            ps.setString(6, address);
+            ps.setString(1, uname);
             
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "New User Added");
@@ -163,12 +157,12 @@ public class newOne extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseClicked
 
        public boolean checkUsername(String username)
-    {
+        {
         PreparedStatement ps;
         ResultSet rs;
         boolean checkUser = false;
         
-        String query = "SELECT * FROM `names` WHERE `u_uname` =?";
+        String query = "SELECT * FROM `names` WHERE `users` =?";
         
         try {
             ps = MyConnection.getConnection().prepareStatement(query);

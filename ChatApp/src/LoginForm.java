@@ -105,38 +105,65 @@ public class LoginForm extends javax.swing.JFrame {
         String resi = reciever.getText();
         
         
-       String query = "SELECT * FROM `chatlog` WHERE `sender` =?";
         
-        try {
-            ps = MyConnection.getConnection().prepareStatement(query);
+       String query = "SELECT * FROM `names` WHERE `users`=?";
+       
+       if(!checkUsername(send)){
+           
+           JOptionPane.showMessageDialog(null, "You are not Registerd...");
+       
+       }
+       else if(!checkUsername(resi)){
+           
+           JOptionPane.showMessageDialog(null, "No reciver found...");
+       
+       }
+       else if(resi==send){
+           
+           JOptionPane.showMessageDialog(null, "Sender cannot be Reciever");
+       
+       }
+       else {
             
-            ps.setString(1, resi);
-            //ps.setString(2, resi);
-            
-            rs = ps.executeQuery();
-            
-            if (rs.next())
-            {
                 Interface mf = new Interface();
                 mf.setVisible (true);
                 mf.pack();
                 mf.setLocationRelativeTo(null);
                 mf.name.setText(send);
+                mf.reciver.setText(resi);
                 
                 this.dispose();
-                
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Reciver not found!!!");
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
+       }
         
+       
         // TODO add your handling code here:
     }//GEN-LAST:event_chatMouseClicked
 
+        public boolean checkUsername(String username)
+        {
+        PreparedStatement ps;
+        ResultSet rs;
+        boolean checkUser = false;
+        
+        String query = "SELECT * FROM `names` WHERE `users` =?";
+        
+        try {
+            ps = MyConnection.getConnection().prepareStatement(query);
+            ps.setString(1, username);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next())
+            {
+                checkUser = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(newOne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return checkUser;
+    }
+    
     private void chatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chatActionPerformed
