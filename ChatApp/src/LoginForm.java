@@ -173,8 +173,7 @@ public class LoginForm extends javax.swing.JFrame {
                 newOne mf = new newOne();
                 mf.setVisible (true);
                 mf.pack();
-                mf.setLocationRelativeTo(null);
-                                
+                mf.setLocationRelativeTo(null);         
                 this.dispose();
         
         
