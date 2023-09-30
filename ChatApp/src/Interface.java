@@ -1,3 +1,13 @@
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -8,14 +18,52 @@
  * @author UserA
  */
 public class Interface extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form Interface
      */
     public Interface() {
         initComponents();
+        
+        String resi =  reciver.getText();
+        String send =  name.getText();
+        massage.setText("");
+        
+        showData(send);
+            
+    } 
+    
+    private void showData(String sender){
+        
+        ResultSet rs;
+        String query = "select * from chatlog";
+        DefaultTableModel model = (DefaultTableModel)t1.getModel();
+        
+        try {
+            Statement st=MyConnection.getConnection().createStatement();
+            
+            rs = st.executeQuery(query);
+            
+            if(rs.next()){
+                String s="";
+                
+                while(rs.next()){
+                
+                    model.addRow(new Object[] {rs.getDate(1), rs.getTime(1),rs.getString(2),rs.getString(3),rs.getString(4)});
+                
+                }
+                        
+            }
+            
+              
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+                
+        
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,16 +77,32 @@ public class Interface extends javax.swing.JFrame {
         massage = new javax.swing.JTextField();
         reciver = new javax.swing.JLabel();
         send = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        history = new javax.swing.JTextArea();
         name = new javax.swing.JLabel();
         cancel = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        t1 = new javax.swing.JTable();
 
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        massage.setText("jTextField1");
+        massage.setToolTipText("");
+        massage.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                massageMouseMoved(evt);
+            }
+        });
+        massage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                massageMouseEntered(evt);
+            }
+        });
+        massage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                massageActionPerformed(evt);
+            }
+        });
 
         reciver.setText("Reciever");
 
@@ -48,13 +112,13 @@ public class Interface extends javax.swing.JFrame {
                 sendMouseClicked(evt);
             }
         });
+        send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendActionPerformed(evt);
+            }
+        });
 
-        history.setColumns(20);
-        history.setRows(5);
-        history.setText("History\n");
-        jScrollPane1.setViewportView(history);
-
-        name.setText("jLabel1");
+        name.setText("Name");
 
         cancel.setText("Cancel");
         cancel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -63,6 +127,26 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Send to : ");
+
+        t1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Time", "Sender", "Reciver", "Message"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(t1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,38 +154,44 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(massage, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(reciver, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)
+                                .addComponent(send))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(147, 147, 147)
                         .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(massage)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(reciver, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(send))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(massage, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(reciver, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(send, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(massage, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(send, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reciver, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,25 +207,70 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelMouseClicked
 
     private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
+       String resi =  reciver.getText();
+       String send =  name.getText();
+       String msg = massage.getText();
+       
+       
+       if(msg==""){
+            JOptionPane.showMessageDialog(null, "+"+msg+"+");
+       }
+       else{
+            PreparedStatement ps;
+            
+         String query  = "INSERT INTO `chatlog` (`sender`,`reciver`,`massage`) VALUES (?,?,?)";
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        try {
+            ps = MyConnection.getConnection().prepareStatement(query);
+            
+            ps.setString(1, send);
+            ps.setString(2, resi);
+            ps.setString(3, msg);
+       
+            
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Massage Sent...");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(newOne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       }
+       
+                Interface mf = new Interface();
+                mf.setVisible (true);
+                mf.pack();
+                mf.setLocationRelativeTo(null);
+                mf.name.setText(send);
+                mf.reciver.setText(resi);
+                
+                this.dispose();
+       
         // TODO add your handling code here:
     }//GEN-LAST:event_sendMouseClicked
+
+    private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendActionPerformed
+
+    private void massageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_massageMouseEntered
+        
+    }//GEN-LAST:event_massageMouseEntered
+
+    private void massageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_massageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_massageActionPerformed
+
+    private void massageMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_massageMouseMoved
+       // TODO add your handling code here:
+    }//GEN-LAST:event_massageMouseMoved
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
+         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -163,18 +298,20 @@ public class Interface extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Interface().setVisible(true);
+               
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
-    private javax.swing.JTextArea history;
     private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField massage;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane2;
+    public static javax.swing.JTextField massage;
     public javax.swing.JLabel name;
     public javax.swing.JLabel reciver;
     private javax.swing.JButton send;
+    private javax.swing.JTable t1;
     // End of variables declaration//GEN-END:variables
 }
